@@ -1,0 +1,30 @@
+version: '2.2'
+
+services:
+  consul:
+    image: consul:latest
+    ports:
+    - "8400:8400"
+    - "8500:8500"
+    - "8600:8600"
+
+  uuid-generator:
+    image: uuid-generator
+    ports:
+    - "8888:8888"
+    depends_on:
+    - consul
+    links:
+    - "consul"
+
+  message-service:
+    image: message-service
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - "9999:9999"
+    depends_on:
+    - consul
+    links:
+    - "consul"

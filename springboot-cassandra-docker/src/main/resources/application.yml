@@ -1,0 +1,16 @@
+server:
+  servlet:
+    context-path: /bookstore/${application.api.version}
+  port: 8080
+
+application:
+  api:
+    version: v1
+spring:
+  cassandra:
+    port: 9042
+    contact-points: localhost
+    keyspace_name: ks_bookstore
+    schema-action: CREATE_IF_NOT_EXISTS
+    password: cassandra
+    username: cassandra

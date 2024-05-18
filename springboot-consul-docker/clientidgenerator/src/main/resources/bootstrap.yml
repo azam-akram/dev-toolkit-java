@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: clientidgenerator
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        enabled: true
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${random.value}
+        healthCheckPath: ${management.server.servlet.context-path}/health
+        healthCheckInterval: 15s
+    

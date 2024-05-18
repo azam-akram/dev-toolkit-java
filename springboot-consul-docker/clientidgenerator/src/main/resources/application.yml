@@ -1,0 +1,10 @@
+application:
+  api:
+    version: v1
+  uuidgenerator:
+    name: uuidgenerator
+    uuid-context-path: /v1/uuidgenerator
+server:
+  port: 8889
+  servlet:
+    context-path: /${application.api.version}/clientidgenerator

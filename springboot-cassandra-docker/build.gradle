@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.2-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.1.0'
+
+	id "com.palantir.docker" version "0.34.0"
+	id "com.palantir.docker-run" version "0.34.0"
+}
+
+version '0.0.1'
+
+group = 'com.azamakram.github'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '19'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation group: 'org.springframework.data', name: 'spring-data-cassandra', version: '4.0.1'
+
+	testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-cassandra', version: '3.0.1'
+
+	annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+docker {
+     name "${project.name}:${project.version}"
+     files 'springboot-cassandra-docker-0.0.1-SNAPSHOT.jar'
+}
+
+dockerRun {
+    name "${project.name}"
+    image "${project.name}:${project.version}"
+    ports '8080:8080'
+    clean true
+}
