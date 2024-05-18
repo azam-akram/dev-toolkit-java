@@ -1,0 +1,10 @@
+version: '2.2'
+
+services:
+  credit-card-service:
+    image: credit-card-service
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - "9999:9999"
