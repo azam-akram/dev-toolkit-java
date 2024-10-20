@@ -1,0 +1,18 @@
+server:
+  port: 5555
+
+application:
+  api:
+    version: v1
+  topic:
+    message-topic: demo-kafka-topic
+
+spring:
+  profiles:
+    active: dev
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+

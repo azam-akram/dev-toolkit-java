@@ -1,0 +1,21 @@
+server:
+  port: 5556
+
+application:
+  api:
+    version: v1
+  topic:
+    message-topic: demo-kafka-topic
+
+spring:
+  profiles:
+    active: dev
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: demo-kafka-consumer
+      enable-auto-commit: true
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
