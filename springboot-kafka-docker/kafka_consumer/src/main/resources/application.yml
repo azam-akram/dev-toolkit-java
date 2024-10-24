@@ -1,9 +1,7 @@
 server:
-  port: 5556
+  port: 5555
 
 application:
-  api:
-    version: v1
   topic:
     message-topic: demo-kafka-topic
 
@@ -18,4 +16,3 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-

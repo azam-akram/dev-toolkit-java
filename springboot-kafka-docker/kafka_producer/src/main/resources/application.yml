@@ -1,9 +1,4 @@
-server:
-  port: 5555
-
 application:
-  api:
-    version: v1
   topic:
     message-topic: demo-kafka-topic
 
@@ -15,4 +10,3 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
