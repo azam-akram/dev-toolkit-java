@@ -1,12 +1,26 @@
+server:
+  port: 4444
+
 application:
   topic:
     message-topic: demo-kafka-topic
 
 spring:
-  profiles:
-    active: dev
   kafka:
-    bootstrap-servers: 127.0.0.1:9092
+    bootstrap-servers: localhost:9092
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

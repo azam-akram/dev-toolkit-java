@@ -6,13 +6,26 @@ application:
     message-topic: demo-kafka-topic
 
 spring:
-  profiles:
-    active: dev
   kafka:
-    bootstrap-servers: 127.0.0.1:9092
+    bootstrap-servers: localhost:9092
+
     consumer:
       group-id: demo-kafka-consumer
-      enable-auto-commit: true
       auto-offset-reset: earliest
+      enable-auto-commit: false
+
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "springboot.kafka.docker.kafka_producer.model"
+            value:
+              default:
+                type: "springboot.kafka.docker.kafka_consumer.model.Message"
+
+    listener:
+      concurrency: 3
+      ack-mode: manual

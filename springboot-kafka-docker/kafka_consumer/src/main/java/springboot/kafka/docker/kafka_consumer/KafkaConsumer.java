@@ -1,21 +1,37 @@
 package springboot.kafka.docker.kafka_consumer;
 
-import springboot.kafka.docker.kafka_consumer.model.Message;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
+import springboot.kafka.docker.kafka_consumer.model.Message;
+
+import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
-@Slf4j
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class KafkaConsumer {
+
+    @RetryableTopic(attempts = "3", backoff = @Backoff(delay = 1000))
     @KafkaListener(topics = "${application.topic.message-topic}", groupId = "${spring.kafka.consumer.group-id}")
-    public void onMessage(final ConsumerRecord<String, String> consumerRecord) throws IOException {
-        Message message = new ObjectMapper().readValue(consumerRecord.value(), Message.class);
-        log.info("Received Messasge: : {}", message.toString());
-        log.trace("Received Messasge: " + message.toString());
+    public void consume(Message message, Acknowledgment ack) {
+
+        log.info("=================================");
+        log.info("Received message:");
+        log.info("UUID: {}", message.getUuid());
+        log.info("FROM: {}", message.getFrom());
+        log.info("TO: {}", message.getTo());
+				log.info("Message: {}", message.getMessage());
+        log.info("=================================");
+        ack.acknowledge();
+    }
+
+    @DltHandler
+    public void handleDlt(Message message, Exception e) {
+        log.error("Message failed after retries — UUID: {}, error: {}", message.getUuid(), e.getMessage());
     }
 }
