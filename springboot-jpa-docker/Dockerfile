@@ -1,9 +1,15 @@
-FROM eclipse-temurin:19-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine AS builder
+WORKDIR /app
+COPY gradlew .
+COPY gradle gradle
+RUN chmod +x gradlew
+COPY build.gradle settings.gradle ./
+RUN ./gradlew dependencies --no-daemon -q
+COPY src src
+RUN ./gradlew bootJar --no-daemon
 
-EXPOSE 8080
-
-ADD build/libs/springboot-jpa-docker-0.0.1-SNAPSHOT.jar /app/springboot-jpa-docker.jar
-
-WORKDIR /app/
-
-CMD ["java","-jar","springboot-jpa-docker.jar"]
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
+EXPOSE 9999
+ENTRYPOINT ["java", "-jar", "app.jar"]
