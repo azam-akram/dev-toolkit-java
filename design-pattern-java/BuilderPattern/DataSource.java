@@ -3,13 +3,9 @@ import javafx.util.Builder;
 public class DataSource {
 
     private int mandatoryInt;
-
     private long mandatoryLong;
-
     private String optionalString;
-
     private int optionalInt;
-
     private long optionalLong;
 
     public static class Builder {

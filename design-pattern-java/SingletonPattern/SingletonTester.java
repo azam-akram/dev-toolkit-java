@@ -1,12 +1,10 @@
 public class SingletonTester {
 
-    public static void main (String[] args) {
+	public static void main (String[] args) {
+		MySingleton mySingleton1 = MySingleton.getInstance();
+		MySingleton mySingleton2 = MySingleton.getInstance();
 
-        MySingletonClass mySingletonClass1 = MySingletonClass.getInstance();
-        MySingletonClass mySingletonClass2 = MySingletonClass.getInstance();
-
-        System.out.println("mySingletonClass1: " + mySingletonClass1.hashCode());
-        System.out.println("mySingletonClass2: " + mySingletonClass2.hashCode());
-
-    }
+		System.out.println("mySingleton1: " + mySingleton1.hashCode());
+		System.out.println("mySingleton2: " + mySingleton2.hashCode());
+	}
 }
