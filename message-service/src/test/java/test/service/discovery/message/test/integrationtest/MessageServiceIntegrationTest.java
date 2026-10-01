@@ -1,12 +1,10 @@
 package test.service.discovery.message.test.integrationtest;
 
 import org.assertj.core.util.Lists;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import test.service.discovery.message.repository.MessageRepository;
 import test.service.discovery.message.model.entity.MessageEntity;
 
@@ -17,7 +15,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@RunWith(SpringRunner.class)
 public class MessageServiceIntegrationTest {
 
     @Autowired

@@ -1,0 +1,8 @@
+CREATE TABLE message (
+  id INT NOT NULL AUTO_INCREMENT,
+  message_key VARCHAR(255) NOT NULL,
+  sender VARCHAR(255) NOT NULL,
+  saved_at DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT UNIQUE_KEY UNIQUE (message_key)
+);

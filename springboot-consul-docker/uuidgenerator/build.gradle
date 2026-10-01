@@ -1,12 +1,15 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.2'
-	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.azamakram.github'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '19'
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
 repositories {
 	mavenCentral()
@@ -14,8 +17,8 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all', version: '4.0.0'
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '4.0.0'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all', version: '4.3.0'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '4.3.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

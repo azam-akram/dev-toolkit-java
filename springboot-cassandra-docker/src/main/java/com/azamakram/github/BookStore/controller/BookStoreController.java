@@ -20,7 +20,7 @@ import com.azamakram.github.BookStore.service.BookStoreService;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.UUID;
 
 @Slf4j

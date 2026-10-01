@@ -1,12 +1,10 @@
 package test.service.discovery.message.test.service;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import test.service.discovery.message.repository.MessageRepository;
 import test.service.discovery.message.service.ServiceDiscoveryHelper;
 import test.service.discovery.message.MessageApplication;
@@ -29,7 +27,6 @@ import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ContextConfiguration(classes = { MessageApplication.class })
-@RunWith(SpringRunner.class)
 public class MessageServiceTest {
 
     private MessageService messageService;
@@ -40,7 +37,7 @@ public class MessageServiceTest {
     @Mock
     private ServiceDiscoveryHelper serviceDiscoveryMock;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.messageService = new MessageService(messageRepositoryMock, serviceDiscoveryMock);
     }
@@ -74,10 +71,11 @@ public class MessageServiceTest {
         assertThat(expectedMessage.getMessageKey()).isEqualTo(output.getMessageKey());
     }
 
-    @Test(expected = MessageNotFoundException.class)
+    @Test
     public void updateMessageWithIncorrectKey_shouldReturnMessageNotFoundException() {
         MessageInput input = MessageInput.builder().sender("a sender").build();
-        messageService.updateMessage("Non existing key",input);
+        org.junit.jupiter.api.Assertions.assertThrows(MessageNotFoundException.class,
+                () -> messageService.updateMessage("Non existing key", input));
     }
 
     @Test

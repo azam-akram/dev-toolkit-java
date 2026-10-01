@@ -1,29 +1,37 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.2'
-	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.azamakram.github'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '19'
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+ext['lombok.version'] = '1.18.48'
 
 repositories {
 	mavenCentral()
 }
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.0.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
 
     //compile 'org.springframework.boot:spring-boot-starter-actuator'
 
-    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.12.0'
+    implementation group: 'org.flywaydb', name: 'flyway-core'
 
-    testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+    testImplementation group: 'com.h2database', name: 'h2'
 
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all', version: '4.0.0'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all', version: '4.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'com.h2database:h2'
+    testRuntimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {

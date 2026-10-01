@@ -1,14 +1,12 @@
 package test.service.discovery.message.test.controller;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import test.service.discovery.message.controller.MessageController;
 import test.service.discovery.message.model.entity.MessageEntity;
@@ -32,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(MessageController.class)
 public class MessageControllerTest {
 
@@ -90,7 +87,7 @@ public class MessageControllerTest {
         given(messageService.saveMessage(any(MessageInput.class))).willReturn(output);
 
         this.mockMvc.perform(post("/message")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(input))
                 .andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost/message/" + output.getMessageKey()));
@@ -100,7 +97,7 @@ public class MessageControllerTest {
     @Test
     public void updateNewResourceExecution_shouldSaveExecution() throws Exception {
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().withNano(123_000_000);
         String nowStr = now.toString();
         String outputStr = "{\"messageKey\":\"message-key-1\",\"sender\":\"changed sender\",\"savedAt\":\"" + nowStr + "\"}";
 
@@ -112,7 +109,7 @@ public class MessageControllerTest {
         String input = "{\"sender\":\"changed sender\"}";
 
         this.mockMvc.perform(put("/message/message-key-1")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(input))
                 .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(content().json(outputStr));

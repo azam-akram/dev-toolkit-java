@@ -9,7 +9,7 @@ import test.service.discovery.message.model.input.MessageInput;
 import test.service.discovery.message.model.output.MessageOutput;
 
 import javax.naming.ServiceUnavailableException;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 

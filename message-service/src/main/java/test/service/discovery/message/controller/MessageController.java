@@ -13,7 +13,7 @@ import test.service.discovery.message.model.output.MessageOutput;
 import test.service.discovery.message.service.MessageService;
 
 import javax.naming.ServiceUnavailableException;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -29,21 +29,21 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllMessages() {
         log.trace("Getting all the message");
         List<MessageOutput> messageOutputList = messageService.getAllMessages();
         return new ResponseEntity<>(messageOutputList, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{count}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/{count}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getNumberOfLastSavedMessages(@PathVariable(value = "count") final Integer count) {
         log.trace(String.format("Getting %d number of last saved message records", count ));
         List<MessageOutput> messageOutputList = messageService.getNNumberOfMessages(count);
         return new ResponseEntity<>(messageOutputList, HttpStatus.OK);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createNewMessage(@Valid @RequestBody final MessageInput messageInput)
             throws ServiceUnavailableException  {
         log.trace("Saving new message");
@@ -56,8 +56,8 @@ public class MessageController {
     }
 
 
-    @PutMapping(path = "/{messageKey}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(path = "/{messageKey}", consumes = MediaType.APPLICATION_JSON_VALUE,
+		  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateMessage(@PathVariable(value = "messageKey") final String messageKey,
                                            @Valid @RequestBody final MessageInput messageInput) {
         log.trace("Updating message");

@@ -1,52 +1,44 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.0.2-SNAPSHOT'
-	id 'io.spring.dependency-management' version '1.1.0'
-
-	id "com.palantir.docker" version "0.34.0"
-	id "com.palantir.docker-run" version "0.34.0"
+    id 'java'
+    id 'org.springframework.boot' version '3.5.0'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 version '0.0.1'
 
 group = 'com.azamakram.github'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '19'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+ext['lombok.version'] = '1.18.48'
+
 repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-	implementation group: 'org.springframework.data', name: 'spring-data-cassandra', version: '4.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-cassandra', version: '3.0.1'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
-}
-
-docker {
-     name "${project.name}:${project.version}"
-     files 'springboot-cassandra-docker-0.0.1-SNAPSHOT.jar'
-}
-
-dockerRun {
-    name "${project.name}"
-    image "${project.name}:${project.version}"
-    ports '8080:8080'
-    clean true
+    useJUnitPlatform()
 }
